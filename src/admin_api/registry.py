@@ -2,9 +2,9 @@ from typing import cast
 
 from django.db.models import Model
 
-from django_admin_api.exceptions import AlreadyRegisteredError, NotRegisteredError
-from django_admin_api.options import ModelAdmin
-from django_admin_api.types import AdminSiteProtocol, ModelAdminProtocol
+from admin_api.exceptions import AlreadyRegisteredError, NotRegisteredError
+from admin_api.options import ModelAdmin
+from admin_api.types import AdminSiteProtocol, ModelAdminProtocol
 
 
 class AdminSite(AdminSiteProtocol):
@@ -61,11 +61,26 @@ class AdminSite(AdminSiteProtocol):
     def get_admins(self) -> tuple[ModelAdminProtocol[Model], ...]:
         return tuple(self._registry.values())
 
+    @property
+    def urls(self):
+        from .urls import get_urls
+        return get_urls(self)
+
 
 site = AdminSite()
 
 
 def register[TModel: Model](*models: type[TModel], site: AdminSite = site):
+    """
+    Register one or more Django models.
+
+    Example:
+
+        @admin.register(Page)
+        class PageAdmin(admin.ModelAdmin[Page]):
+            ...
+    """
+
     def decorator(admin_class: type[ModelAdminProtocol[TModel]]):
         for model in models:
             site.register(model=model, admin_class=admin_class)
