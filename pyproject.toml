@@ -1,28 +1,74 @@
-[project]
-name = "django-admin-api"
-version = "0.1.0"
-description = "REST API administration framework for Django"
-
-licence = { "text" = "MIT" }
-readme = "README.md"
-
-authors = [
-    { name = "Glebfra" }
-]
-
-requires-python = ">=3.12"
-dependencies = [
-    "django>=5.2",
-    "djangorestframework>=3.16",
-    "pytest>=9.1.1",
-]
-
-[project.scripts]
-admin-api = "admin_api:main"
-
 [build-system]
 requires = [
     "uv_build>=0.12.22,<0.13.0",
     "hatchling>=1.27",
 ]
 build-backend = "hatchling.build"
+
+[project]
+name = "django-admin-api"
+version = "0.1.0"
+
+description = "REST API administration framework for Django"
+
+readme = "README.md"
+
+requires-python = ">=3.12"
+
+licence = "MIT"
+
+authors = [
+    { name = "Glebfra" }
+]
+
+dependencies = [
+    "django>=5.2",
+    "djangorestframework>=3.16",
+]
+
+[project.urls]
+Homepage = "https://github.com/Glebfra/DjangoAdminAPI"
+Repository = "https://github.com/Glebfra/DjangoAdminAPI"
+Issues = "https://github.com/Glebfra/DjangoAdminAPI/issues"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-django>=4.9",
+    "mypy>=1.15",
+    "ruff>=0.9",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "src/admin_api",
+]
+
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+    "/README.md",
+    "/LICENSE",
+    "/pyproject.toml",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "UP",
+    "B",
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
+pythonpath = [
+    "src",
+]
