@@ -1,0 +1,28 @@
+[project]
+name = "django-admin-api"
+version = "0.1.0"
+description = "REST API administration framework for Django"
+
+licence = { "text" = "MIT" }
+readme = "README.md"
+
+authors = [
+    { name = "Glebfra" }
+]
+
+requires-python = ">=3.12"
+dependencies = [
+    "django>=5.2",
+    "djangorestframework>=3.16",
+    "pytest>=9.1.1",
+]
+
+[project.scripts]
+admin-api = "admin_api:main"
+
+[build-system]
+requires = [
+    "uv_build>=0.12.22,<0.13.0",
+    "hatchling>=1.27",
+]
+build-backend = "hatchling.build"
